@@ -36,6 +36,18 @@ const loadVideos = async () => {
     console.log(data);
 }
 
+// load cat videos
+
+const loadCatVideos = async (id) => {
+    // alert(id)
+    const response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    const data = await response.json()
+    displayVideos(data.category)
+    // console.log(data.category);
+
+
+}
+
 // const obj =
 // {
 //     "category_id": "1001",
@@ -60,6 +72,7 @@ const displayVideos = (videos) => {
 
     const videosContainer = document.getElementById('videos-container')
 
+    videosContainer.innerHTML = ''
     videos.forEach(video => {
         const div = document.createElement('div')
         div.classList = 'card card-compact '
@@ -68,7 +81,7 @@ const displayVideos = (videos) => {
         <figure class='relative'>
     <img class='w-full h-[248px] object-cover'
       src=${video.thumbnail} />
-      ${video.others.posted_date?.length == 0 ? '': `<span class='absolute right-2 bottom-2 bg-black text-white rounded p-1'>${getTimeString(video.others.posted_date)}</span>`}
+      ${video.others.posted_date?.length == 0 ? '' : `<span class='absolute right-2 bottom-2 bg-black text-white rounded p-1'>${getTimeString(video.others.posted_date)}</span>`}
       
   </figure>
   <div class="px-0 py-2 flex gap-4">
@@ -82,7 +95,7 @@ const displayVideos = (videos) => {
   <h3 class='font-bold'>${video.title} </h3>
   <div class='flex gap-2'>
   <P class='text-sm text-gray-500'>${video.authors[0].profile_name}</P>
-  ${video.authors[0].verified== true ? `<img class='h-5 w-5 rounded-full object-cover'
+  ${video.authors[0].verified == true ? `<img class='h-5 w-5 rounded-full object-cover'
       src='assets/verify.png'/>
 ` : ''}
 
@@ -116,11 +129,12 @@ const displayCategories = (categories) => {
     categories.forEach(item => {
         // console.log(item);
         // create a button
-        const button = document.createElement('button')
-        button.classList = 'btn'
-        button.innerText = item.category
+        const buttonContainer = document.createElement('div')
+        buttonContainer.innerHTML = `
+        <button onclick='loadCatVideos(${item.category_id})' class='btn'> ${item.category}</button>
+        `
         // add button to category container
-        categoriesContainer.append(button)
+        categoriesContainer.append(buttonContainer)
     });
 }
 
