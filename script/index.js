@@ -73,6 +73,23 @@ const displayVideos = (videos) => {
     const videosContainer = document.getElementById('videos-container')
 
     videosContainer.innerHTML = ''
+    if (videos.length == 0) {
+        videosContainer.classList.remove('grid')
+        videosContainer.innerHTML =`
+        <div class= 'min-h-[400px] items-center justify-center gap-5 flex flex-col '>
+        <img class= 'w-[250px]' src='assets/Icon.png' />
+        <h2 class= 'font-bold text-4xl text-center text-gray-500'>No Contents Here in This Category</h2>
+        
+        </div>
+        `
+        return
+        
+    }
+    else{
+        videosContainer.classList.add('grid')
+
+    }
+
     videos.forEach(video => {
         const div = document.createElement('div')
         div.classList = 'card card-compact '
@@ -94,13 +111,13 @@ const displayVideos = (videos) => {
   <div>
   <h3 class='font-bold'>${video.title} </h3>
   <div class='flex gap-2'>
-  <P class='text-sm text-gray-500'>${video.authors[0].profile_name}</P>
+  <P class='text-sm text-gray-600'>${video.authors[0].profile_name}</P>
   ${video.authors[0].verified == true ? `<img class='h-5 w-5 rounded-full object-cover'
       src='assets/verify.png'/>
 ` : ''}
 
   </div>
-  <p class='text-xs text-gray-400 mt-1'>${video.others.views} views</p>
+  <p class='text-sm text-gray-500 mt-1'>${video.others.views} views</p>
   
   </div>
 
@@ -131,7 +148,7 @@ const displayCategories = (categories) => {
         // create a button
         const buttonContainer = document.createElement('div')
         buttonContainer.innerHTML = `
-        <button onclick='loadCatVideos(${item.category_id})' class='btn'> ${item.category}</button>
+        <button id='${item.category_id}' onclick='loadCatVideos(${item.category_id})' class='btn category-btn'> ${item.category}</button>
         `
         // add button to category container
         categoriesContainer.append(buttonContainer)
