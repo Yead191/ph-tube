@@ -157,13 +157,13 @@ const displayVideos = (videos) => {
   <div>
   <h3 class='font-bold'>${video.title} </h3>
   <div class='flex gap-2'>
-  <P class='text-sm text-gray-600'>${video.authors[0].profile_name}</P>
+  <P class='font-md text-black'>${video.authors[0].profile_name}</P>
   ${video.authors[0].verified == true ? `<img class='h-5 w-5 rounded-full object-cover'
       src='assets/verify.png'/>
 ` : ''}
 
   </div>
-  <p class='text-sm text-gray-500 mt-1'>${video.others.views} views</p>
+  <p class='text-sm text-gray-600 mt-1'>${video.others.views} views</p>
   
   </div>
 
