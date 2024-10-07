@@ -10,6 +10,18 @@ function getTimeString(time) {
 
 }
 
+const removeActiveClass = () => {
+    const buttons = document.getElementsByClassName('category-btn')
+    // console.log(buttons);
+    for (let btn of buttons) {
+
+        btn.classList.remove('btn-neutral')
+
+
+    }
+
+}
+
 // fetch, load and show categories on html
 
 // create loadCategories
@@ -26,14 +38,14 @@ const loadCategories = async () => {
 }
 
 // fetch videos
-const loadVideos = async () => {
+const loadVideos = async (searchText = '') => {
 
     // fetch
-    const response = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
+    const response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
     const data = await response.json()
     displayVideos(data.videos)
 
-    console.log(data);
+    // console.log(data);
 }
 
 // load cat videos
@@ -42,10 +54,44 @@ const loadCatVideos = async (id) => {
     // alert(id)
     const response = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
     const data = await response.json()
+
+    // sobar theke active class remove korao
+    removeActiveClass()
+
+
+    // then id er class k active koro
+    const activeBtn = document.getElementById(`${id}`)
+    activeBtn.classList.add('btn-neutral')
+    // console.log('bitton activated', activeBtn);
     displayVideos(data.category)
     // console.log(data.category);
 
 
+}
+
+// load details
+const loadDetails =async (videoId)=>{
+    const res =await fetch(`https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`)
+    const data =await res.json()
+    displayDetails(data.video)
+
+}
+const displayDetails =(video)=>{
+
+    const modalContainer = document.getElementById('modalContent')
+    modalContainer.innerHTML =`
+    <img class='rounded-md' src='${video.thumbnail}'/>
+    <p class='my-5  text-sm text-gray-500'>Description: ${video.description}</p>
+    `
+
+
+    // way-1
+    // document.getElementById('showModalData').click()
+
+    // way-2 
+    document.getElementById('customModal').showModal()
+
+    
 }
 
 // const obj =
@@ -75,7 +121,7 @@ const displayVideos = (videos) => {
     videosContainer.innerHTML = ''
     if (videos.length == 0) {
         videosContainer.classList.remove('grid')
-        videosContainer.innerHTML =`
+        videosContainer.innerHTML = `
         <div class= 'min-h-[400px] items-center justify-center gap-5 flex flex-col '>
         <img class= 'w-[250px]' src='assets/Icon.png' />
         <h2 class= 'font-bold text-4xl text-center text-gray-500'>No Contents Here in This Category</h2>
@@ -83,9 +129,9 @@ const displayVideos = (videos) => {
         </div>
         `
         return
-        
+
     }
-    else{
+    else {
         videosContainer.classList.add('grid')
 
     }
@@ -121,14 +167,14 @@ const displayVideos = (videos) => {
   
   </div>
 
-    
-    
+  <button onclick = "loadDetails('${video.video_id}')" class='btn btn-sm btn-neutral'>Details</button>
+  
   </div>
 
         
         `
         videosContainer.append(div)
-        console.log(video);
+        // console.log(video);
 
     });
 
@@ -157,6 +203,9 @@ const displayCategories = (categories) => {
 
 
 
+document.getElementById('searchInput').addEventListener('keyup', (e)=>{
+    loadVideos(e.target.value);
+})
 
 loadCategories()
 loadVideos()

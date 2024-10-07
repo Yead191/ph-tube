@@ -23,30 +23,23 @@
             font-optical-sizing: auto;
             font-style: normal;
         }
-        .active{
-            background-color: rgb(4, 137, 4);
-        }
     </style>
 </head>
+
 <body class="inter lg:w-11/12 mx-auto py-4 px-2 lg:px-0">
     <nav class="flex justify-between items-center border-b p-4">
-        <div >
+        <div>
             <img class="w-3/4" src="assets/Logo.png" alt="">
         </div>
         <label class="input input-bordered flex items-center gap-2 w-auto lg:w-6/12">
-            <input type="text" class="grow" placeholder="Search" />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              class="h-4 w-4 opacity-70">
-              <path
-                fill-rule="evenodd"
-                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                clip-rule="evenodd" />
+            <input id="searchInput" type="text" class="grow" placeholder="Search" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="h-4 w-4 opacity-70">
+                <path fill-rule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clip-rule="evenodd" />
             </svg>
-          </label>
-          <button class="btn hidden md:block">SORT</button>
+        </label>
+        <button class="btn hidden md:block">SORT</button>
     </nav>
 
     <main>
@@ -59,9 +52,26 @@
 
     </main>
 
+    <!-- modal -->
+    <!-- Open the modal using ID.showModal() method -->
+    <button id="showModalData" class="btn hidden" onclick="customModal.showModal()">open modal</button>
+    <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <div id="modalContent" class="">
+
+            </div>
+                <form id="dialogForm" method="dialog" class="justify-center text-center">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
 
     <!-- script -->
-     <script src="script/index.js"></script>
+    
+    <script src="script/index.js"></script>
 </body>
 
 </html>
